@@ -11,3 +11,5 @@ MAX_THREADS = 4 # Número máximo de hilos para procesar en paralelo
 ##CLASES CSS PARA SCRAPPING##
 #---------------------------#
 #Aquí puedes agregar las clases CSS que se utilizan para el scrapping. Por ejemplo:
+#Popup followers
+followers_list = 'div.x6nl9eh.x1a5l9x9.x7vuprf.x1mg3h75.x1lliihq.x1iyjqo2.xs83m0k.xz65tgg.x1rife3k.x1n2onr6'

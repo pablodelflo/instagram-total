@@ -30,7 +30,7 @@ def main():
             print("Código a desarrollar")
 
         elif opcion == 3:
-            print("Código a desarrollar")
+            app.getFollowers(PROFILE_INSTAGRAM)
         
         elif opcion == 0:
             app.cerrar()
