@@ -18,15 +18,17 @@ class ExcelUtils:
             df = pd.DataFrame(columns=["Número seguidores", "Fecha comprobación"])
             df.to_excel(fichero, index=False)
 
+
     def checkLastNumberFollowx(self, fichero, numFollowers):
         #Abrimos la excel de histórico y mantenemos en un dataframe
-        dfCheckFollowers = pd.read_excel(historicFollowers)
+        dfCheckFollowers = pd.read_excel(fichero)
         dateActual = datetime.now().strftime("%d-%m-%Y %H:%M")
+        dateLastCheck = dfCheckFollowers.iloc[-1]["Fecha comprobación"]
 
         #Comprobamos si está vacío para añadir directamente el valor actual, si no, leemos último registro
         if dfCheckFollowers.empty:
             #No hay registros
-            with pd.ExcelWriter(historicFollowers, mode='a', if_sheet_exists='overlay') as writer:
+            with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
                 nuevoRegistro = pd.DataFrame([[numFollowers, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
                 nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
             lastNumberFollower = 0
@@ -37,14 +39,14 @@ class ExcelUtils:
             if lastNumberFollower == numFollowers:
                 #Son iguales, solo actualizamos fecha
                 dfCheckFollowers.iloc[-1, dfCheckFollowers.columns.get_loc("Fecha comprobación")] = dateActual
-                dfCheckFollowers.to_excel(historicFollowers, index=False)
+                dfCheckFollowers.to_excel(fichero, index=False)
             else:
                 #Son distintos, añadimos nueva fila
-                with pd.ExcelWriter(historicFollowers, mode='a', if_sheet_exists='overlay') as writer:
+                with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
                     nuevoRegistro = pd.DataFrame([[numFollowers, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
                     nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
             
-        return lastNumberFollower, dateActual
+        return lastNumberFollower, dateLastCheck
 
 
 
