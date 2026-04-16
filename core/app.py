@@ -74,7 +74,7 @@ class InstagramApp:
         scroll_div = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, followers_list)))
 
         prev_height = 0
-        vuelta = 0
+        #vuelta = 0
         while True:
             current_height = self.driver.execute_script("return arguments[0].scrollHeight;", scroll_div)
             self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight;", scroll_div)
@@ -82,9 +82,9 @@ class InstagramApp:
             new_height = self.driver.execute_script("return arguments[0].scrollHeight;", scroll_div)
             if new_height == current_height:
                 break
-            vuelta = vuelta + 1
-            if vuelta == 2:
-                break  # DEBUG: solo un scroll
+            #vuelta = vuelta + 1
+            #if vuelta == 2:
+            #    break  # DEBUG: solo un scroll
 
 
     def getFollowers(self, url):
@@ -112,8 +112,10 @@ class InstagramApp:
             print("\nNo había registros previos")
         elif lastNumberFollower < numFollowers:
             print(f"\n¡Bien! Te ha/n seguido ({numFollowers - lastNumberFollower}) cuenta/s nueva/s.")
+            print("Aquí tienes el listado: ")
         elif lastNumberFollower > numFollowers:
             print(f"\nVaya, has perdido ({lastNumberFollower - numFollowers}) seguidor/es.")
+            print("Aquí tienes el listado: ")
         else:
             print(f"\nTienes los mismos seguidores que la última comprobación, hecha el {lastDateCheck}")
 
@@ -145,3 +147,6 @@ class InstagramApp:
             df = pd.DataFrame(followers, columns=[columnas])
             with pd.ExcelWriter(excelFollowers, mode='a', if_sheet_exists='overlay') as writer:
                 df.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
+        
+
+        self.excel.checkUnfollow(excelFollowers, excelFollowersOld)
