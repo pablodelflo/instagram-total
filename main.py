@@ -1,6 +1,7 @@
 import sys
 from core.app import InstagramApp
 from config import PROFILE_INSTAGRAM
+from services.followers_service import FollowerService
 
 
 
@@ -34,7 +35,8 @@ def main():
             print("Código a desarrollar")
 
         elif opcion == 3:
-            app.getFollowers(PROFILE_INSTAGRAM)
+            #app.getFollowers(PROFILE_INSTAGRAM)
+            FollowerService(app).getFollowers(PROFILE_INSTAGRAM)
         
         elif opcion == 0:
             app.cerrar()

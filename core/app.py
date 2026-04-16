@@ -82,11 +82,11 @@ class InstagramApp:
             new_height = self.driver.execute_script("return arguments[0].scrollHeight;", scroll_div)
             if new_height == current_height:
                 break
-            #vuelta = vuelta + 1
-            #if vuelta == 2:
-            #    break  # DEBUG: solo un scroll
+        #    vuelta = vuelta + 1
+        #    if vuelta == 2:
+        #        break  # DEBUG: solo un scroll
 
-
+    '''
     def getFollowers(self, url):
         ##Esta función obtiene el listado completo de las cuentas que te siguen
         print("Vamos a obtener tus seguidores")
@@ -150,3 +150,4 @@ class InstagramApp:
         
 
         self.excel.checkUnfollow(excelFollowers, excelFollowersOld)
+    '''
