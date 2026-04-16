@@ -51,7 +51,6 @@ class ExcelUtils:
 
 
     def creaExcel(self, fichero, columnas, ficheroOld):
-        '''
         if os.path.exists(ficheroOld):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M")
             newName = str(ficheroOld).replace(".xlsx", f"-{timestamp}.xlsx")
@@ -65,7 +64,6 @@ class ExcelUtils:
 
         if os.path.exists(fichero):
             os.rename(fichero, ficheroOld)
-        '''
         df = pd.DataFrame(columns=columnas)
         df.to_excel(fichero, index=False)
 
