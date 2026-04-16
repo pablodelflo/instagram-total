@@ -1,10 +1,14 @@
+import sys
 from core.app import InstagramApp
 from config import PROFILE_INSTAGRAM
 
 
 
+#Codificación de salida para la consola
+sys.stdout.reconfigure(encoding='utf-8')
 
 def main():
+
 
     app = InstagramApp()
 

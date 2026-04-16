@@ -8,6 +8,15 @@ SCROLL_PAUSE_TIME = 2.5 # Pausa entre scrolls (en segundos) para que no se detec
 MAX_EXTRA_SCROLLS = 2  # Scrolls adicionales después del final
 MAX_THREADS = 4 # Número máximo de hilos para procesar en paralelo
 
+##FICHEROS
+#Completa la ruta de los siguientes ficheros excel. Deben estar dentro de la carpeta UTILS
+excelFollowers = Path("")
+excelFollowings = Path("")
+excelFollowersOld = Path("")
+excelFollowingsOld = Path("")
+lastFollowers = Path("")
+lastFollowings = Path("")
+
 ##CLASES CSS PARA SCRAPPING##
 #---------------------------#
 #Aquí puedes agregar las clases CSS que se utilizan para el scrapping. Por ejemplo:
