@@ -54,7 +54,12 @@ class ExcelUtils:
         if os.path.exists(ficheroOld):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M")
             newName = str(ficheroOld).replace(".xlsx", f"-{timestamp}.xlsx")
-            os.rename(ficheroOld, newName)
+            try:
+                os.rename(ficheroOld, newName)
+            except PermissionError:
+                print(f"\nError: Cierra el fichero {fichero} antes de continuar.")
+                input("Pulsa Enter cuando lo hayas cerrado...")
+                os.rename(ficheroOld, newName)
             
             if not os.path.exists(folderOld):
                 os.mkdir(folderOld)
@@ -63,7 +68,12 @@ class ExcelUtils:
             shutil.move(newName, folderOld)
 
         if os.path.exists(fichero):
-            os.rename(fichero, ficheroOld)
+            try:
+                os.rename(fichero, ficheroOld)
+            except PermissionError:
+                print(f"\nError: Cierra el fichero {fichero} antes de continuar.")
+                input("Pulsa Enter cuando lo hayas cerrado...")
+                os.rename(fichero, ficheroOld)
         df = pd.DataFrame(columns=columnas)
         df.to_excel(fichero, index=False)
 
@@ -74,5 +84,7 @@ class ExcelUtils:
 
         unfollows = dfOld[~dfOld["Link"].isin(dfNuevo["Link"])]
 
-        for link in unfollows["Link"]:
-            print(link)
+        print("\nAquí tienes el listado: ")
+
+        for _, row in unfollows.iterrows():
+            print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")

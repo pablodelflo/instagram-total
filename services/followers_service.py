@@ -39,15 +39,14 @@ class FollowerService:
             print("\nNo había registros previos")
         elif lastNumberFollower < numFollowers:
             print(f"\n¡Bien! Te ha/n seguido ({numFollowers - lastNumberFollower}) cuenta/s nueva/s.")
-            print("Aquí tienes el listado: ")
         elif lastNumberFollower > numFollowers:
             print(f"\nVaya, has perdido ({lastNumberFollower - numFollowers}) seguidor/es.")
-            print("Aquí tienes el listado: ")
         else:
             print(f"\nTienes los mismos seguidores que la última comprobación, hecha el {lastDateCheck}")
 
 
         self.driver.find_element(By.XPATH, "//*[contains(text(), 'seguidores')]").click()
+        print("\nEspera mientras obtenemos tus seguidores. Esto puede tardar algunos minutos.")
         self.app.full_scroll_followX()
 
         listFollowers = self.driver.find_elements(By.CSS_SELECTOR, 'div.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.xeuugli.x1iyjqo2')
@@ -75,5 +74,4 @@ class FollowerService:
             with pd.ExcelWriter(excelFollowers, mode='a', if_sheet_exists='overlay') as writer:
                 df.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
         
-
         self.excel.checkUnfollow(excelFollowers, excelFollowersOld)
