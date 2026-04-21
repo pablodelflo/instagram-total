@@ -119,3 +119,5 @@ class ExcelUtils:
             notMutual = dfFollowings[dfFollowings["Mutual"] == "No"]
             for _, row in notMutual.iterrows():
                 print(f"{row['Usuario']}")
+            
+            print(f"\nTotal de cuentas que no te siguen de vuelta: {len(notMutual)}")
