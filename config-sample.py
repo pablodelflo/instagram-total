@@ -16,6 +16,7 @@ excelFollowersOld = Path("")
 excelFollowingsOld = Path("")
 lastFollowers = Path("")
 lastFollowings = Path("")
+folderOld = Path("")
 
 ##CLASES CSS PARA SCRAPPING##
 #---------------------------#
