@@ -118,4 +118,4 @@ class ExcelUtils:
 
             notMutual = dfFollowings[dfFollowings["Mutual"] == "No"]
             for _, row in notMutual.iterrows():
-                print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']}")
+                print(f"{row['Usuario']}")
