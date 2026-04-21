@@ -14,40 +14,53 @@ class ExcelUtils:
 
     def controlFollowxExist(self, fichero):
         if not os.path.exists(fichero):
-            print("El fichero de control de followers no existe, lo creo")
-            df = pd.DataFrame(columns=["Número seguidores", "Fecha comprobación"])
+            print("\nEl fichero de control de followers/followings no existe, lo creo")
+            if 'Followers' in str(fichero):
+                df = pd.DataFrame(columns=["Número seguidores", "Fecha comprobación"])
+            elif 'Followings' in str(fichero):
+                df = pd.DataFrame(columns=["Número seguidos", "Fecha comprobación"])
             df.to_excel(fichero, index=False)
+    
 
-
-    def checkLastNumberFollowx(self, fichero, numFollowers):
+    def checkLastNumberFollowx(self, fichero, numFollowX):
         #Abrimos la excel de histórico y mantenemos en un dataframe
-        dfCheckFollowers = pd.read_excel(fichero)
+        dfCheckFollowX = pd.read_excel(fichero)
         dateActual = datetime.now().strftime("%d-%m-%Y %H:%M")
-        dateLastCheck = dfCheckFollowers.iloc[-1]["Fecha comprobación"]
 
         #Comprobamos si está vacío para añadir directamente el valor actual, si no, leemos último registro
-        if dfCheckFollowers.empty:
+        if dfCheckFollowX.empty:
             #No hay registros
             with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
-                nuevoRegistro = pd.DataFrame([[numFollowers, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
-                nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
-            lastNumberFollower = 0
-
+                if 'Followers' in str(fichero):
+                    nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
+                    nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
+                elif 'Followings' in str(fichero):
+                    nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidos", "Fecha comprobación"])
+                    nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
+            lastNumberFollowX = 0
+            dateLastCheck = dateActual
         else:
-            lastNumberFollower = dfCheckFollowers.iloc[-1]["Número seguidores"]
-            #Comparamos seguidores actuales con histórico
-            if lastNumberFollower == numFollowers:
+            if 'Followers' in str(fichero):
+                lastNumberFollowX = dfCheckFollowX.iloc[-1]["Número seguidores"]
+            elif 'Followings' in str(fichero):
+                lastNumberFollowX = dfCheckFollowX.iloc[-1]["Número seguidos"]
+            #Comparamos seguidores/seguidos actuales con histórico
+            if lastNumberFollowX == numFollowX:
                 #Son iguales, solo actualizamos fecha
-                dfCheckFollowers.iloc[-1, dfCheckFollowers.columns.get_loc("Fecha comprobación")] = dateActual
-                dfCheckFollowers.to_excel(fichero, index=False)
+                dfCheckFollowX.iloc[-1, dfCheckFollowX.columns.get_loc("Fecha comprobación")] = dateActual
+                dfCheckFollowX.to_excel(fichero, index=False)
             else:
                 #Son distintos, añadimos nueva fila
                 with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
-                    nuevoRegistro = pd.DataFrame([[numFollowers, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
-                    nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
-            
-        return lastNumberFollower, dateLastCheck
+                    if 'Followers' in str(fichero):
+                        nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
+                        nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
+                    elif 'Followings' in str(fichero):
+                        nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidos", "Fecha comprobación"])
+                        nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
+            dateLastCheck = dfCheckFollowX.iloc[-1]["Fecha comprobación"]
 
+        return lastNumberFollowX, dateLastCheck
 
 
     def creaExcel(self, fichero, columnas, ficheroOld):

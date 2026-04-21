@@ -36,10 +36,10 @@ def main():
 
         elif opcion == 3:
             #app.getFollowers(PROFILE_INSTAGRAM)
-            FollowerService(app).getFollowers(PROFILE_INSTAGRAM)
+            FollowerService(app).getFollowers()
 
         elif opcion == 4:
-            FollowingService(app).bannerFollowX(PROFILE_INSTAGRAM)
+            FollowingService(app).bannerFollowX()
             FollowingService(app).menuFollowings()
 
         elif opcion == 5:

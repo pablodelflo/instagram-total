@@ -14,7 +14,7 @@ class FollowerService:
         self.excel = app.excel
 
 
-    def getFollowers(self, url):
+    def getFollowers(self):
         ##Esta función obtiene el listado completo de las cuentas que te siguen
         print("Vamos a obtener tus seguidores")
 
@@ -42,7 +42,7 @@ class FollowerService:
         elif lastNumberFollower > numFollowers:
             print(f"\nVaya, has perdido ({lastNumberFollower - numFollowers}) seguidor/es.")
         else:
-            print(f"\nTienes los mismos seguidores que la última comprobación, hecha el {lastDateCheck}")
+            print(f"\nTienes el mismo número de seguidores que la última comprobación, hecha el {lastDateCheck}")
 
 
         self.driver.find_element(By.XPATH, "//*[contains(text(), 'seguidores')]").click()
