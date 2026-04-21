@@ -101,3 +101,21 @@ class ExcelUtils:
 
         for _, row in unfollows.iterrows():
             print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")
+
+    
+    def checkMutual(self, ficheroFollowers, ficheroFollowing):
+        if not os.path.exists(ficheroFollowers) or not os.path.exists(ficheroFollowing):
+            print("\nFalta uno o ambos ficheros necesarios, revísalo por favor")
+        else:
+            print("\nComparando ficheros, espera...")
+
+            dfFollowers = pd.read_excel(ficheroFollowers)
+            dfFollowings = pd.read_excel(ficheroFollowing)
+
+            dfFollowings["Mutual"] = dfFollowings["Link"].isin(dfFollowers["Link"]).map({True: "Si", False: "No"})
+
+            dfFollowings.to_excel(excelFollowings, index=False)
+
+            notMutual = dfFollowings[dfFollowings["Mutual"] == "No"]
+            for _, row in notMutual.iterrows():
+                print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']}")
