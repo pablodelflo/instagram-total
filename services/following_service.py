@@ -227,9 +227,11 @@ class FollowingService:
         for idx, row in dfFollowings.iterrows():
             
             if idx != 0 and idx%10 == 0:
-                print("\n-----------------------------")
-                print(f"***Cuentas procesadas: {idx} de {totalUsuarios}***")
-                print("-----------------------------\n")
+                mensaje = f"Cuentas procesadas: {idx} de {totalUsuarios}"
+                separador = "-" * (len(mensaje) + 8)
+                print(f"\n\n{separador}")
+                print(f"*** {mensaje} ***")
+                print(f"{separador}\n")
 
             self.driver.get(row["Link"])
 
