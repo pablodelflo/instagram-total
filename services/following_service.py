@@ -40,11 +40,10 @@ class FollowingService:
             print("1 - Obtener lista de cuentas a la que sigues")
             print("2 - Comprobar cuentas inactivas")
             print("3 - Comprobar mutuals (followbacks)")
-            print("4 - Análisis completo")
 
             try:
                 opcion = int(input("Elige opción: "))
-                if opcion not in (0, 1, 2, 3, 4):
+                if opcion not in (0, 1, 2, 3):
                     raise ValueError
             except ValueError:
                 print("\nDebes introducir una opción correcta. Vuelve a probar.")
@@ -53,15 +52,10 @@ class FollowingService:
                 self.getFollowings()
 
             elif opcion == 2:
-                print("Código a desarrollar")
                 self.checkActivity(excelFollowings)
 
             elif opcion == 3:
-                print("Código a desarrollar")
                 self.excel.checkMutual(excelFollowers, excelFollowings)
-
-            elif opcion == 4:
-                print("Código a desarrollar")
             
             elif opcion == 0:
                 break
