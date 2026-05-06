@@ -118,7 +118,7 @@ class FollowingService:
         else:
             inactiva = "No"
 
-        return max(fechas).strftime("%d/%m/%Y"), inactiva  
+        return max(fechas).strftime("%Y-%m-%d"), inactiva  
     
 
     def getBio(self):
@@ -241,7 +241,7 @@ class FollowingService:
 
             if story:
                 #Si tiene story activa, asumimos que la fecha de actividad es el día que lanzamos el script.
-                actividad = datetime.now(ZoneInfo("Europe/Madrid")).strftime("%d/%m/%Y")
+                actividad = datetime.now(ZoneInfo("Europe/Madrid")).strftime("%Y-%m-%d")
                 revisar = "No"
                 print("La cuenta tiene historia/s activa/s")
             
