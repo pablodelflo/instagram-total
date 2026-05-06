@@ -97,10 +97,12 @@ class ExcelUtils:
 
         unfollows = dfOld[~dfOld["Link"].isin(dfNuevo["Link"])]
 
-        print("\nAquí tienes el listado: ")
-
-        for _, row in unfollows.iterrows():
-            print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")
+        if len(unfollows) != 0:
+            print("\n== Aquí tienes el listado de las cuentas que han dejado de seguirte ==")
+            for _, row in unfollows.iterrows():
+                print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")
+        else:
+            print("No ha habido cambios en tus followers")
 
     
     def checkMutual(self, ficheroFollowers, ficheroFollowing):
@@ -121,3 +123,7 @@ class ExcelUtils:
                 print(f"{row['Usuario']}")
             
             print(f"\nTotal de cuentas que no te siguen de vuelta: {len(notMutual)}")
+
+    
+    def checkFollowXChange(self, fichero, ficheroOld):
+        print("--Por desarrollar--")

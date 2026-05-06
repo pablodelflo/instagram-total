@@ -82,6 +82,11 @@ class InstagramApp:
             new_height = self.driver.execute_script("return arguments[0].scrollHeight;", scroll_div)
             if new_height == current_height:
                 break
-        #    vuelta = vuelta + 1
-        #    if vuelta == 2:
-        #        break  # DEBUG: solo un scroll
+            #print("Está activo el modo debug de scroll")
+            #vuelta = vuelta + 1
+            #if vuelta == 2:
+            #    break  # DEBUG: solo un scroll
+
+    def cerrarVentanaFollowX(self):
+        print("Cerrando ventana emergente")
+        self.driver.find_element(By.CSS_SELECTOR, 'svg[aria-label="Cerrar"]').click()

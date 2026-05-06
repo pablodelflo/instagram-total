@@ -75,3 +75,5 @@ class FollowerService:
                 df.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
         
         self.excel.checkUnfollow(excelFollowers, excelFollowersOld)
+
+        self.app.cerrarVentanaFollowX()
