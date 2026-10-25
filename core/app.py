@@ -88,5 +88,5 @@ class InstagramApp:
             #    break  # DEBUG: solo un scroll
 
     def cerrarVentanaFollowX(self):
-        print("Cerrando ventana emergente")
+        #print("Cerrando ventana emergente")
         self.driver.find_element(By.CSS_SELECTOR, 'svg[aria-label="Cerrar"]').click()

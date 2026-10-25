@@ -30,7 +30,7 @@ class ExcelUtils:
         #Comprobamos si está vacío para añadir directamente el valor actual, si no, leemos último registro
         if dfCheckFollowX.empty:
             #No hay registros
-            with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
+            with pd.ExcelWriter(fichero, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
                 if 'Followers' in str(fichero):
                     nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
                     nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
@@ -51,7 +51,7 @@ class ExcelUtils:
                 dfCheckFollowX.to_excel(fichero, index=False)
             else:
                 #Son distintos, añadimos nueva fila
-                with pd.ExcelWriter(fichero, mode='a', if_sheet_exists='overlay') as writer:
+                with pd.ExcelWriter(fichero, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
                     if 'Followers' in str(fichero):
                         nuevoRegistro = pd.DataFrame([[numFollowX, dateActual]], columns=["Número seguidores", "Fecha comprobación"])
                         nuevoRegistro.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
@@ -96,13 +96,21 @@ class ExcelUtils:
         dfOld = pd.read_excel(ficheroOld)
 
         unfollows = dfOld[~dfOld["Link"].isin(dfNuevo["Link"])]
+        newFollows = dfNuevo[~dfNuevo["Link"].isin(dfOld["Link"])]
 
         if len(unfollows) != 0:
             print("\n== Aquí tienes el listado de las cuentas que han dejado de seguirte ==")
             for _, row in unfollows.iterrows():
                 print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")
         else:
-            print("No ha habido cambios en tus followers")
+            print("\nNo tienes ningún unfollow.")
+
+        if len(newFollows) != 0:
+            print("\n== Aquí tienes el listado de las cuentas que han empezado a seguirte ==")
+            for _, row in newFollows.iterrows():
+                print(f"{row['Usuario']} · {row['Nombre']} · {row['Link']} · ¿Lo sigo? → {row['Lo sigo']}")
+        else:
+            print("\nNo te ha seguido ninguna cuenta nueva.")
 
     
     def checkMutual(self, ficheroFollowers, ficheroFollowing):

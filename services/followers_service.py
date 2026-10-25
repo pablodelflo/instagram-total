@@ -71,7 +71,7 @@ class FollowerService:
             columnas = ["Usuario", "Nombre", "Link", "Lo sigo"]
             self.excel.creaExcel(excelFollowers, columnas, excelFollowersOld)
             df = pd.DataFrame(followers, columns=[columnas])
-            with pd.ExcelWriter(excelFollowers, mode='a', if_sheet_exists='overlay') as writer:
+            with pd.ExcelWriter(excelFollowers, engine='openpyxl',mode='a', if_sheet_exists='overlay') as writer:
                 df.to_excel(writer, index=False, header=False, startrow=writer.sheets['Sheet1'].max_row)
         
         self.excel.checkUnfollow(excelFollowers, excelFollowersOld)
